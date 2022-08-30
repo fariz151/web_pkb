@@ -1,0 +1,631 @@
+/**@license showplusx: a performance-optimized slideshow engine
+ * @author  Levente Hunyadi
+ * @version 1.0
+ * @remarks Copyright (C) 2009-2017 Levente Hunyadi
+ * @remarks Licensed under GNU/GPLv3, see https://www.gnu.org/licenses/gpl-3.0.html
+ * @see     https://hunyadi.info.hu/projects/showplusx
+ **/
+
+/*
+* Slideshow container (customizable)
+*/
+
+.showplusx-slideshow {
+width: 100%;
+height: 100%;
+}
+
+/*
+* Captions (customizable)
+*/
+.showplusx-caption {
+background-color: rgba(0,0,0,0.5);
+color: rgb(255,255,255);
+text-align: center;
+}
+
+.showplusx-caption > a {
+color: rgb(255,255,255);
+}
+
+/*
+* Animation settings (customizable)
+*/
+
+.showplusx-animation-in {
+animation-duration: 2s;
+}
+
+.showplusx-animation-show {
+animation-duration: 3s;
+animation-timing-function: linear;
+}
+
+.showplusx-animation-out {
+animation-duration: 2s;
+}
+
+/*
+* Viewport area showing slideshow images
+*/
+
+.showplusx-slideshow {
+position: relative;
+overflow: hidden;
+}
+
+.showplusx-viewport,
+.showplusx-item {
+position: absolute;
+overflow: hidden;
+}
+
+.showplusx-viewport {
+z-index: 0;  /* establish local stacking context */
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+}
+
+.showplusx-item {
+margin: 0;
+border: 0;
+padding: 0;
+width: 100%;
+height: 100%;
+box-sizing: border-box;
+background-origin: border-box;
+background-clip: content-box;
+background-size: cover;
+background-position: center;
+}
+
+/*
+* Captions
+*/
+
+.showplusx-caption {
+position: absolute;
+left: 0;
+right: 0;
+}
+
+.showplusx-caption-top {
+top: 0;
+}
+
+.showplusx-caption-top.showplusx-animation-in {
+animation: push-top-in 1s ease;
+}
+
+.showplusx-caption-bottom {
+bottom: 0;
+}
+
+.showplusx-caption-bottom.showplusx-animation-in {
+animation: push-bottom-in 1s ease;
+}
+
+/*
+* Navigation buttons in viewport area
+*/
+
+.showplusx-previous,
+.showplusx-next {
+position: absolute;
+background: transparent none no-repeat scroll 0 center;
+top: 0;
+bottom: 0;
+width: 58px;
+}
+
+.showplusx-previous,
+.showplusx-slideshow[dir=rtl] > .showplusx-next {
+left: 0;
+right: auto;
+}
+
+.showplusx-next,
+.showplusx-slideshow[dir=rtl] > .showplusx-previous {
+left: auto;
+right: 0;
+}
+
+.showplusx-previous,  /* lowest priority rule, sets background image */
+div.showplusx-previous:hover,  /* highest priority rule, makes control visible on hover */
+.showplusx-slideshow[dir=rtl] > .showplusx-next,
+.showplusx-slideshow[dir=rtl] > div.showplusx-next:hover {
+background-image: url(navigation-prev.svg);
+}
+
+.showplusx-next,
+div.showplusx-next:hover,
+.showplusx-slideshow[dir=rtl] > .showplusx-previous,
+.showplusx-slideshow[dir=rtl] > div.showplusx-previous:hover {
+background-image: url(navigation-next.svg);
+}
+
+@media (hover) and (pointer: fine) {  /* rules for desktop devices */
+div.showplusx-previous,  /* medium priority rule, hides control on desktop devices (unless on hover, see highest priority rule) */
+.showplusx-slideshow[dir=rtl] > div.showplusx-previous,
+div.showplusx-next,
+.showplusx-slideshow[dir=rtl] > div.showplusx-next {
+background-image: none
+}
+}
+
+/*
+* Quick-access navigation bar
+*/
+
+.showplusx-navigation {
+position: absolute;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.showplusx-navigation.showplusx-top,
+.showplusx-navigation.showplusx-bottom {
+left: 0;
+right: 0;
+}
+
+.showplusx-navigation.showplusx-top {
+top: 0;
+}
+
+.showplusx-navigation.showplusx-bottom {
+bottom: 0;
+}
+
+.showplusx-navigation.showplusx-start,
+.showplusx-navigation.showplusx-end {
+top: 0;
+bottom: 0;
+flex-direction: column;
+}
+
+.showplusx-navigation.showplusx-start,
+.showplusx-slideshow[dir=rtl] > .showplusx-navigation.showplusx-end {
+left: 0;
+right: auto;
+}
+
+.showplusx-navigation.showplusx-end,
+.showplusx-slideshow[dir=rtl] > .showplusx-navigation.showplusx-start {
+left: auto;
+right: 0;
+}
+
+.showplusx-navigation > span {
+display: inline-block;
+margin: 12px 4px;
+border: 1px solid black;
+border-radius: 100%;
+width: 36px;
+height: 36px;
+background-color: white;
+background-size: cover;
+background-position: center;
+opacity: 0.5;
+}
+
+.showplusx-navigation.showplusx-start > span,
+.showplusx-navigation.showplusx-end > span {
+margin: 4px 12px;
+}
+
+.showplusx-navigation > span:hover {
+opacity: 1;
+}
+
+/*
+* Common animation keyframes
+*/
+
+.showplusx-current {
+z-index: 2;
+}
+
+.showplusx-animation-in {
+animation-name: idle;
+z-index: 1;
+}
+
+.showplusx-animation-show {
+animation-name: idle-show;  /* 'in' and 'show', and 'show' and 'out' animations must be different */
+}
+
+.showplusx-animation-out {
+animation-name: idle;
+z-index: -1;
+}
+
+@keyframes idle {
+    0% {
+        visibility: visible;  /* artificial, compatibility with Microsoft browsers where empty keyframe is not allowed */
+    }
+    100% {
+        visibility: visible;  /* artificial, compatibility with Microsoft browsers where empty keyframe is not allowed */
+    }
+}
+
+@keyframes idle-show {
+    0% {
+        opacity: 1.0;  /* artificial, makes sure 'idle' keyframe animations are different */
+    }
+    100% {
+        opacity: 1.0;  /* artificial, makes sure 'idle' keyframe animations are different */
+    }
+}
+
+/*
+* Fade effect
+*/
+
+.showplusx-fade > .showplusx-animation-in {
+animation-name: fade-in;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.showplusx-fade > .showplusx-animation-out {
+animation-direction: reverse;
+animation-name: fade-in;
+}
+
+/*
+* Fold effects
+* These effects anchor the element to the container edges and run the animation by decreasing the area occupied
+* by the margin. As the margin decreases, more of the fixed space becomes available to the image. Proper background
+* positioning and the fact that the background is clipped to the border box (not painted over the margin area) causes
+* the image to be gradually revealed.
+*/
+
+.showplusx-fold > .showplusx-animation-in {
+width: auto;
+right: 0;
+left: 0;
+}
+
+/*
+* Fold left
+* Starts by showing only the leftmost portion of the image, gradually uncovering the entire image.
+*/
+.showplusx-fold-left > .showplusx-animation-in {
+animation-name: fold-left;
+}
+
+@keyframes fold-left {
+    0% {
+        padding-right: 100%;
+    }
+    100% {
+        padding-right: 0%;
+    }
+}
+
+/*
+* Fold right
+* Starts by showing only the rightmost portion of the image, gradually uncovering the entire image.
+*/
+.showplusx-fold-right > .showplusx-animation-in {
+animation-name: fold-right;
+}
+
+@keyframes fold-right {
+    0% {
+        padding-left: 100%;
+    }
+    100% {
+        padding-left: 0%;
+    }
+}
+
+/*
+* Fold top
+*/
+.showplusx-fold-top > .showplusx-animation-in {
+animation-name: fold-top;
+}
+
+@keyframes fold-top {
+    0% {
+        padding-bottom: 100%;
+    }
+    100% {
+        padding-bottom: 0%;
+    }
+}
+
+/*
+* Fold bottom
+*/
+.showplusx-fold-bottom > .showplusx-animation-in {
+animation-name: fold-bottom;
+}
+
+@keyframes fold-bottom {
+    0% {
+        padding-top: 100%;
+    }
+    100% {
+        padding-top: 0%;
+    }
+}
+
+/*
+* Push effects
+*/
+
+/*
+* Push from left
+* The image enters into view at the left side of the container.
+*/
+.showplusx-push-left > .showplusx-animation-in {
+animation-name: push-left-in;
+}
+
+@keyframes push-left-in {
+    0% {
+        transform: translate(-100%, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.showplusx-push-left > .showplusx-animation-out {
+animation-name: push-left-out;
+}
+
+@keyframes push-left-out {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(100%, 0);
+    }
+}
+
+/*
+* Push from right
+* The image enters into view at the right side of the container.
+*/
+.showplusx-push-right > .showplusx-animation-in {
+animation-name: push-right-in;
+}
+
+@keyframes push-right-in {
+    0% {
+        transform: translate(100%, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.showplusx-push-right > .showplusx-animation-out {
+animation-name: push-right-out;
+}
+
+@keyframes push-right-out {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, 0);
+    }
+}
+
+/*
+* Push from top
+* The image enters into view at the top side of the container.
+*/
+.showplusx-push-top > .showplusx-animation-in {
+animation-name: push-top-in;
+}
+
+@keyframes push-top-in {
+    0% {
+        transform: translate(0, -100%);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.showplusx-push-top > .showplusx-animation-out {
+animation-name: push-top-out;
+}
+
+@keyframes push-top-out {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(0, 100%);
+    }
+}
+
+/*
+* Push from bottom
+* The image enters into view at the bottom side of the container.
+*/
+.showplusx-push-bottom > .showplusx-animation-in {
+animation-name: push-bottom-in;
+}
+
+@keyframes push-bottom-in {
+    0% {
+        transform: translate(0, 100%);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.showplusx-push-bottom > .showplusx-animation-out {
+animation-name: push-bottom-out;
+}
+
+@keyframes push-bottom-out {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(0, -100%);
+    }
+}
+
+/*
+* Circle effect
+*/
+
+.showplusx-circle > .showplusx-animation-in {
+animation-name: circle-in;
+}
+
+@keyframes circle-in {
+    0% {
+        clip-path: circle(0 at 50% 50%);
+        visibility: visible;
+    }
+    100% {
+        clip-path: circle(100% at 50% 50%);
+        visibility: visible;
+    }
+}
+
+/*
+* Ken Burns effects.
+* These effects operate with pan and zoom, using GPU-accelerated transforms.
+*/
+
+.showplusx-kenburns > .showplusx-animation-in {
+animation-name: kenburns-in;
+}
+
+@keyframes kenburns-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.showplusx-kenburns > .showplusx-animation-out {
+animation-name: kenburns-out;
+}
+
+@keyframes kenburns-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2, 2);
+        opacity: 0;
+    }
+}
+
+/*
+* Ken Burns top left
+* Starts by focusing on the top left quadrant of the image, and gradually
+* zooms out until the entire image is visible.
+*/
+.showplusx-kenburns-topleft > .showplusx-animation-in,
+.showplusx-kenburns-topleft > .showplusx-animation-show {
+transform: translate(25%, 25%) scale(1.5, 1.5);
+}
+
+.showplusx-kenburns-topleft > .showplusx-animation-show {
+animation-name: kenburns-topleft;
+}
+
+@keyframes kenburns-topleft {
+    0% { }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+/*
+* Ken Burns top right
+* Starts by focusing on the top right quadrant of the image, and gradually
+* zooms out until the entire image is visible.
+*/
+.showplusx-kenburns-topright > .showplusx-animation-in,
+.showplusx-kenburns-topright > .showplusx-animation-show {
+transform: translate(-25%, 25%) scale(1.5, 1.5);
+}
+
+.showplusx-kenburns-topright > .showplusx-animation-show {
+animation-name: kenburns-topright;
+}
+
+@keyframes kenburns-topright {
+    0% { }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+/*
+* Ken Burns bottom right
+* Starts by focusing on the bottom right quadrant of the image, and gradually
+* zooms out until the entire image is visible.
+*/
+.showplusx-kenburns-bottomright > .showplusx-animation-in,
+.showplusx-kenburns-bottomright > .showplusx-animation-show {
+transform: translate(-25%, -25%) scale(1.5, 1.5);
+}
+
+.showplusx-kenburns-bottomright > .showplusx-animation-show {
+animation-name: kenburns-bottomright;
+}
+
+@keyframes kenburns-bottomright {
+    0% { }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+/*
+* Ken Burns bottom left
+* Starts by focusing on the bottom left quadrant of the image, and gradually
+* zooms out until the entire image is visible.
+*/
+.showplusx-kenburns-bottomleft > .showplusx-animation-in,
+.showplusx-kenburns-bottomleft > .showplusx-animation-show {
+transform: translate(25%, -25%) scale(1.5, 1.5);
+}
+
+.showplusx-kenburns-bottomleft > .showplusx-animation-show {
+animation-name: kenburns-bottomleft;
+}
+
+@keyframes kenburns-bottomleft {
+    0% { }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+/*
+* Hide elements that are not used
+*/
+
+.showplusx-hidden {  /* put rule last to have it override other rules of same priority */
+display: none;
+}

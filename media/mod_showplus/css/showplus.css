@@ -1,0 +1,77 @@
+/**
+* @file
+* @brief    showplus slideshow module for Joomla
+* @author   Levente Hunyadi
+* @version  2.0.0
+* @remarks  Copyright (C) 2011 Levente Hunyadi
+* @remarks  Licensed under GNU/GPLv3, see https://www.gnu.org/licenses/gpl-3.0.html
+* @see      https://hunyadi.info.hu/projects/showplus
+*/
+
+/*
+* Image slideshow alignment
+*/
+
+.showplus-container {
+position: relative;
+}
+
+.showplus-center {
+float: none;
+clear: both;
+margin: 0 auto;
+}
+.showplus-left.showplus-float {
+float: left;
+}
+.showplus-left.showplus-clear {
+margin: 0 auto 0 0;
+}
+.showplus-right.showplus-float {
+float: right;
+}
+.showplus-right.showplus-clear {
+margin: 0 0 0 auto;
+}
+
+/*
+* JavaScript disabled mode
+*/
+
+.showplus-slideshow,
+.showplus-pager {
+list-style-type: none;
+margin: 0;
+padding: 0;
+}
+
+.showplus-slideshow > * {
+display: none;
+}
+
+.showplus-slideshow > .showplus-default,
+.showplus-slideshow > :target {
+display: block;
+}
+
+.showplus-slideshow > :target ~ * {
+display: none;
+}
+
+.showplus-pager {
+text-align: center;
+}
+
+html.showplus-js .showplus-slideshow,
+html.showplus-js .showplus-pager {
+display: none;
+}
+
+.showplus-navigation {
+display: none;
+}
+
+html.showplus-js .showplus-navigation {
+display: block;
+text-align: center;
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" version="3.9" group="system" method="upgrade">
+    <name>PLG_SYSTEM_LAZYLOADFORJOOMLA</name>
+    <version>3.5.0-FREE</version>
+    <creationDate>2020-06-06</creationDate>
+    <license>http://www.gnu.org/licenses/gpl</license>
+    <copyright>Copyright 2020 Viktor Vogel. All rights reserved.</copyright>
+    <author>Viktor Vogel</author>
+    <authorEmail>admin@kubik-rubik.de</authorEmail>
+    <authorUrl>https://kubik-rubik.de/</authorUrl>
+    <description>PLG_SYSTEM_LAZYLOADFORJOOMLA_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="lazyloadforjoomla">lazyloadforjoomla.php</filename>
+        <filename plugin="lazyloadforjoomla">index.html</filename>
+        <folder plugin="lazyloadforjoomla">src</folder>
+    </files>
+    <languages folder="language">
+        <language tag="de-DE">de-DE/de-DE.plg_system_lazyloadforjoomla.ini</language>
+        <language tag="de-DE">de-DE/de-DE.plg_system_lazyloadforjoomla.sys.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_lazyloadforjoomla.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_lazyloadforjoomla.sys.ini</language>
+    </languages>
+    <scriptfile>src/Script.php</scriptfile>
+    <updateservers>
+        <server type="extension" priority="1" name="PLG_SYSTEM_LAZYLOADFORJOOMLA">https://check.kubik-rubik.de/updates/lazyloadforjoomla.xml</server>
+    </updateservers>
+    <config>
+        <fields name="params" addfieldpath="/plugins/system/lazyloadforjoomla/src/fields">
+            <fieldset name="settings">
+                <field type="krdonationcodecheck"/>
+                <field name="lazyLoadScript" type="krProInput" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_LAZYLOADSCRIPT" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_LAZYLOADSCRIPT_DESC"/>
+                <field name="noscriptFallback" type="list" default="1" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_NOSCRIPT_FALLBACK" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_NOSCRIPT_FALLBACK_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="cancelOnExit" type="krProInput" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_CANCELONEXIT" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_CANCELONEXIT_DESC"/>
+                <field name="threshold" type="text" size="80" default="0" filter="integer" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_THRESHOLD" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_THRESHOLD_DESC"/>
+                <field name="excludeImageNames" type="textarea" default="" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEIMAGENAMES" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEIMAGENAMES_DESC" rows="6" cols="60"/>
+                <field name="excludeImageNamesToggle" type="list" default="0" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEIMAGENAMES_TOGGLE" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEIMAGENAMES_TOGGLE_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="excludeComponents" type="textarea" default="" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDECOMPONENTS" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDECOMPONENTS_DESC" rows="6" cols="60"/>
+                <field name="excludeComponentsToggle" type="list" default="0" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDECOMPONENTS_TOGGLE" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDECOMPONENTS_TOGGLE_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="excludeUrls" type="textarea" default="" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEURLS" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEURLS_DESC" rows="6" cols="60"/>
+                <field name="excludeUrlsToggle" type="list" default="0" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEURLS_TOGGLE" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEURLS_TOGGLE_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="imageClasses" type="krProInput" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASSES" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASSES_DESC"/>
+                <field name="imageClassesToggle" type="krProInput" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASSES_TOGGLE" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASSES_TOGGLE_DESC"/>
+                <field name="imageClass" type="text" size="80" default="" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASS" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASSDESC"/>
+                <field name="imageClassToggle" type="list" default="0" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASS_TOGGLE" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_IMAGECLASS_TOGGLEDESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="excludeEditor" type="list" default="1" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEJOOMLAEDITOR" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEJOOMLAEDITOR_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="excludeBots" type="list" default="1" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEBOTS" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEBOTS_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="botsList" type="text" size="80" default="bot,spider,crawler,libwww,search,archive,slurp,teoma,facebook,twitter,googlebot" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEBOTSLIST" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEBOTSLIST_DESC"/>
+                <field name="viewsList" type="text" size="80" default="component,print" label="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEVIEWSLIST" description="PLG_SYSTEM_LAZYLOADFORJOOMLA_EXCLUDEVIEWSLIST_DESC"/>
+                <field name="krtitle" type="krTitle" label="" description=""/>
+            </fieldset>
+            <fieldset name="donation">
+                <field type="krdonationcodecheck" name="donation"/>
+                <field name="donation_code" type="text" default="" size="40" label="KR_DONATION_CODE" description="KR_DONATION_CODE_DESC"/>
+                <field name="krtitle" type="krtitle" label=""/>
+                <field type="krprobutton" name="lazyloadforjoomla"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>

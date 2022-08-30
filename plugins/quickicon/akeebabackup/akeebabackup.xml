@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--~
+  ~ @package   akeebabackup
+  ~ @copyright Copyright (c)2006-2022 Nicholas K. Dionysopoulos / Akeeba Ltd
+  ~ @license   GNU General Public License version 3, or later
+  -->
+
+<extension version="2.5" type="plugin" group="quickicon" method="upgrade">
+    <name>plg_quickicon_akeebabackup</name>
+    <author>Nicholas K. Dionysopoulos</author>
+    <authorEmail>nicholas@akeeba.com</authorEmail>
+    <authorUrl>https://www.akeeba.com</authorUrl>
+    <copyright>Copyright (c)2006-2021 Nicholas K. Dionysopoulos</copyright>
+    <license>GNU General Public License version 3, or later</license>
+    <creationDate>2022-04-04</creationDate>
+    <version>8.1.3</version>
+    <description>PLG_QUICKICON_AKEEBABACKUP_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="akeebabackup">akeebabackup.php</filename>
+        <filename>index.html</filename>
+        <filename>.htaccess</filename>
+        <filename>web.config</filename>
+    </files>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_quickicon_akeebabackup.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_quickicon_akeebabackup.sys.ini</language>
+    </languages>
+    <config addfieldpath="/administrator/components/com_akeeba/fields">
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="enablewarning"
+					   type="fancyradio"
+					   label="PLG_QUICKICON_AKEEBABACKUP_LBL_WARNINGS"
+                       description="PLG_QUICKICON_AKEEBABACKUP_DESC_WARNINGS"
+					   default="1"
+                       class="btn-group btn-group-yesno"
+				>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="warnfailed"
+                       type="fancyradio"
+                       label="PLG_QUICKICON_AKEEBABACKUP_LBL_WARNFAILED"
+                       description="PLG_QUICKICON_AKEEBABACKUP_DESC_WARNFAILED"
+					   default="1"
+                       class="btn-group btn-group-yesno"
+                       showon="enablewarning:1"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field name="maxbackupperiod"
+					   type="number"
+					   label="PLG_QUICKICON_AKEEBABACKUP_LBL_PERIOD"
+                       description="PLG_QUICKICON_AKEEBABACKUP_DESC_PERIOD"
+					   min="1"
+					   max="87600"
+					   step="1"
+					   default="24"/>
+
+
+                <field name="profileid"
+					   type="backupprofiles"
+					   default="1"
+                       label="PLG_QUICKICON_AKEEBABACKUP_PROFILE_LABEL"
+					   class="advancedSelect"
+                       description="PLG_QUICKICON_AKEEBABACKUP_PROFILE_DESC"
+                />
+            </fieldset>
+        </fields>
+    </config>
+
+    <scriptfile>script.php</scriptfile>
+</extension>

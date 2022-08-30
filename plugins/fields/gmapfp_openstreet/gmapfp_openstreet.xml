@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" version="3.7.0" group="fields" method="upgrade">
+	<name>plg_fields_gmapfp_openstreet</name>
+	<author>Fabrice4821</author>
+	<creationDate>Novembre 2021</creationDate>
+	<copyright>Copyright (C) 2011 - 2019 Open Source Matters. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>webmaster@gmapfp.org</authorEmail>
+	<authorUrl>https://creation-web.pro</authorUrl>
+	<version>3.0.5</version>
+	<description>PLG_FIELDS_GMAPFP_OPENSTREET_XML_DESCRIPTION</description>
+	<scriptfile>install_script.php</scriptfile>
+	<files>
+		<filename plugin="gmapfp_openstreet">gmapfp_openstreet.php</filename>
+		<filename>osm.xml</filename>
+		<folder>params</folder>
+		<folder>tmpl</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.plg_fields_gmapfp_openstreet.ini</language>
+		<language tag="en-GB">en-GB.plg_fields_gmapfp_openstreet.sys.ini</language>
+		<language tag="fr-FR">fr-FR.plg_fields_gmapfp_openstreet.ini</language>
+		<language tag="fr-FR">fr-FR.plg_fields_gmapfp_openstreet.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="gmapfp_osm_layers" type="subform"
+					formsource="plugins/fields/gmapfp_openstreet/osm.xml" multiple="true"
+					label="PLG_FIELDS_GMAPFP_OPENSTREET_OSM_LAYER" description="PLG_FIELDS_GMAPFP_OPENSTREET_OSM_LAYER_DESC"
+					default='{
+						"__field20":{"name":"Route","alias":"OSM","url":"//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png","attribution":"© &#8249;a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap&#8249;/a> contributors","max_zoom":"20"},
+						"__field21":{"name":"Satelite","alias":"esri_sat","url":"//server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}","attribution":"©  &#8249;a href=\"http://www.esri.com/\" target=\"_blank\">Esri&#8249;/a>i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community","max_zoom":"19"}
+						}'
+						filter="raw"/>
+			</fieldset>
+		</fields>
+	</config>
+    <updateservers>
+        <server type="extension" priority="1" name="GMapFP OSM Field / Update Site">http://creation-web.pro/updates/gmapfp_osm_field.xml</server>
+    </updateservers>
+</extension>

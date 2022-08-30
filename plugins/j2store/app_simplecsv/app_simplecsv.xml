@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="plugin" group="j2store" method="upgrade">
+	<name>Simple CSV Import</name>
+	<version>1.13</version>
+	<creationDate>JAN 2018</creationDate>
+	<author>Gokila Priya</author>
+	<authorEmail>supports@j2store.org</authorEmail>
+	<authorUrl>http://www.j2store.org</authorUrl>
+	<copyright>2018 Weblogicx India</copyright>
+	<license>GNU General Public License v2</license>
+	<description>PLG_J2STORE_APP_SIMPLE_CSV_DESC</description>
+	<files>
+		<filename plugin="app_simplecsv">app_simplecsv.php</filename>
+		<folder>app_simplecsv</folder>
+		<folder>languages</folder>		
+		<filename>index.html</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">languages/en-GB.plg_j2store_app_simplecsv.ini</language>
+		<language tag="en-GB">languages/en-GB.plg_j2store_app_simplecsv.sys.ini</language>
+	</languages>		
+</extension>

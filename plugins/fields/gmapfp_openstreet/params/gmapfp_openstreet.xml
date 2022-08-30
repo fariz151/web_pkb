@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="fieldparams">
+		<fieldset name="fieldparams">
+			<field
+				name="mapheight"
+				type="text"
+				label="PLG_FIELDS_GMAPFP_OPENSTREET_PARAMS_HEIGHT_LABEL"
+				description="PLG_FIELDS_GMAPFP_OPENSTREET_PARAMS_HEIGHT_DESC"
+				class="btn-group btn-group-yesno"
+				default="400"
+				filter="integer"
+				/>
+		</fieldset>
+	</fields>
+</form>
